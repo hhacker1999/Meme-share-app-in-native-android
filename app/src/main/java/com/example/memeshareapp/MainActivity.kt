@@ -2,15 +2,14 @@ package com.example.memeshareapp
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -30,14 +29,15 @@ class MainActivity : AppCompatActivity() {
         shareButton = findViewById(R.id.share_button)
         loadMeme()
     }
+
     private fun loadMeme() {
-progressBar.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
         val url = "https://meme-api.herokuapp.com/gimme"
         val stringRequest = JsonObjectRequest(
             Request.Method.GET, url, null,
             { response ->
                 memeUrl = response.getString("url")
-                Glide.with(this).load(memeUrl).listener(object: RequestListener<Drawable>{
+                Glide.with(this).load(memeUrl).listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
                         e: GlideException?,
                         model: Any?,
@@ -61,8 +61,9 @@ progressBar.visibility = View.VISIBLE
                 }).into(memeView)
             },
             {})
-MySingleton.getInstance(this).addToRequestQueue(stringRequest)
+        MySingleton.getInstance(this).addToRequestQueue(stringRequest)
     }
+
     fun shareMeme(view: View) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
